@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <!-- Deep teal to midnight blue gradient for background -->
+    <radialGradient id="bgGrad" cx="40%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#0f4c5c"/>
+      <stop offset="100%" stop-color="#070f1a"/>
+    </radialGradient>
+
+    <!-- Gold shimmer for accent elements -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#f7d97a"/>
+      <stop offset="45%"  stop-color="#e8b84b"/>
+      <stop offset="100%" stop-color="#c47f17"/>
+    </linearGradient>
+
+    <!-- Soft glow for the calendar icon -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#1a6678"/>
+      <stop offset="100%" stop-color="#0d3545"/>
+    </linearGradient>
+
+    <!-- Teal shimmer for the ۱۴ text -->
+    <linearGradient id="numGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#7ee8fa"/>
+      <stop offset="100%" stop-color="#41b8d5"/>
+    </linearGradient>
+
+    <!-- Glow filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Subtle shadow -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+
+    <!-- Gold glow -->
+    <filter id="goldGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="1 0.7 0 0 0  0.6 0.4 0 0 0  0 0 0 0 0  0 0 0 1 0" result="colored"/>
+      <feMerge>
+        <feMergeNode in="colored"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <clipPath id="roundedCard">
+      <rect x="80" y="100" width="240" height="210" rx="22"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="200" cy="200" r="200" fill="url(#bgGrad)"/>
+
+  <!-- Decorative ring -->
+  <circle cx="200" cy="200" r="185" fill="none" stroke="#1a5f73" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="200" cy="200" r="174" fill="none" stroke="#e8b84b" stroke-width="0.6" opacity="0.3"/>
+
+  <!-- Subtle geometric dots ring -->
+  <g opacity="0.25">
+    <circle cx="200" cy="18"  r="2.5" fill="#e8b84b"/>
+    <circle cx="200" cy="382" r="2.5" fill="#e8b84b"/>
+    <circle cx="18"  cy="200" r="2.5" fill="#e8b84b"/>
+    <circle cx="382" cy="200" r="2.5" fill="#e8b84b"/>
+    <circle cx="72"  cy="72"  r="2"   fill="#7ee8fa"/>
+    <circle cx="328" cy="72"  r="2"   fill="#7ee8fa"/>
+    <circle cx="72"  cy="328" r="2"   fill="#7ee8fa"/>
+    <circle cx="328" cy="328" r="2"   fill="#7ee8fa"/>
+  </g>
+
+  <!-- Calendar card body -->
+  <rect x="80" y="100" width="240" height="210" rx="22"
+        fill="url(#cardGrad)" filter="url(#shadow)"/>
+
+  <!-- Card border -->
+  <rect x="80" y="100" width="240" height="210" rx="22"
+        fill="none" stroke="#2a8fa8" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- Calendar header bar -->
+  <rect x="80" y="100" width="240" height="58" rx="22"
+        fill="#e8b84b" clip-path="url(#roundedCard)"/>
+  <!-- Fix bottom corners of header -->
+  <rect x="80" y="136" width="240" height="22" fill="#e8b84b"/>
+
+  <!-- Header shine -->
+  <rect x="80" y="100" width="240" height="28" rx="0"
+        fill="white" opacity="0.07" clip-path="url(#roundedCard)"/>
+
+  <!-- Calendar hanger pegs -->
+  <rect x="140" y="90" width="16" height="28" rx="8" fill="#0d3545"/>
+  <rect x="244" y="90" width="16" height="28" rx="8" fill="#0d3545"/>
+  <rect x="140" y="90" width="16" height="28" rx="8"
+        fill="none" stroke="#e8b84b" stroke-width="1.5"/>
+  <rect x="244" y="90" width="16" height="28" rx="8"
+        fill="none" stroke="#e8b84b" stroke-width="1.5"/>
+
+  <!-- Month name in header (فروردین) -->
+  <text x="200" y="137"
+        font-family="'Georgia', 'Times New Roman', serif"
+        font-size="18" font-weight="bold"
+        fill="#0d2d3a" text-anchor="middle"
+        letter-spacing="1">فروردین</text>
+
+  <!-- Big Jalali year digits ۱۴ -->
+  <text x="200" y="228"
+        font-family="'Georgia', 'Times New Roman', serif"
+        font-size="86" font-weight="bold"
+        fill="url(#numGrad)"
+        text-anchor="middle"
+        filter="url(#glow)"
+        opacity="0.95">۱۴</text>
+
+  <!-- Horizontal divider line -->
+  <line x1="108" y1="250" x2="292" y2="250"
+        stroke="#2a8fa8" stroke-width="1" opacity="0.4"/>
+
+  <!-- Small calendar grid dots (decorative) -->
+  <g fill="#7ee8fa" opacity="0.35">
+    <circle cx="126" cy="272" r="3"/>
+    <circle cx="158" cy="272" r="3"/>
+    <circle cx="190" cy="272" r="3"/>
+    <circle cx="222" cy="272" r="3"/>
+    <circle cx="254" cy="272" r="3"/>
+    <circle cx="286" cy="272" r="3"/>
+
+    <circle cx="126" cy="292" r="3"/>
+    <circle cx="158" cy="292" r="3"/>
+    <circle cx="190" cy="292" r="3"/>
+    <circle cx="222" cy="292" r="3"/>
+    <circle cx="254" cy="292" r="3" opacity="0.6"/>
+    <circle cx="286" cy="292" r="3" opacity="0.6"/>
+  </g>
+
+  <!-- Highlighted day (today marker) -->
+  <circle cx="190" cy="292" r="10" fill="#e8b84b" opacity="0.9" filter="url(#goldGlow)"/>
+  <circle cx="190" cy="292" r="3" fill="#0d2d3a"/>
+
+  <!-- ParsiDate wordmark -->
+  <text x="200" y="355"
+        font-family="'Georgia', 'Times New Roman', serif"
+        font-size="26" font-weight="bold"
+        fill="url(#goldGrad)"
+        text-anchor="middle"
+        letter-spacing="2"
+        filter="url(#goldGlow)">ParsiDate</text>
+
+  <!-- Tagline -->
+  <text x="200" y="376"
+        font-family="'Georgia', 'Times New Roman', serif"
+        font-size="10"
+        fill="#7ee8fa"
+        text-anchor="middle"
+        letter-spacing="3"
+        opacity="0.7">JALALI  ·  PHP  ·  ZERO-DEP</text>
+</svg>
