@@ -1,31 +1,28 @@
 <?php
-
 declare(strict_types=1);
-
 namespace ParsiDate\Support;
 
 /**
- * Persian (Farsi)  locale data for month names, day names, and digit conversion.
- * 
+ * Persian (Farsi) locale data for month names, day names, and digit conversion.
  */
 final class PersianLocale
 {
     public const MONTH_NAMES = [
-        1 => "فروردین",
-        2 => "اردیبهشت",
-        3 => "خرداد",
-        4 => "تیر",
-        5 => "مرداد",
-        6 => "شهریور",
-        7 => "مهر",
-        8 => "آبان",
-        9 => "آذر",
-        10 => "دی",
-        11 => "بهمن",
-        12 => "اسفند"
+        1  => 'فروردین',
+        2  => 'اردیبهشت',
+        3  => 'خرداد',
+        4  => 'تیر',
+        5  => 'مرداد',
+        6  => 'شهریور',
+        7  => 'مهر',
+        8  => 'آبان',
+        9  => 'آذر',
+        10 => 'دی',
+        11 => 'بهمن',
+        12 => 'اسفند',
     ];
 
-   public const MONTH_NAMES_EN = [
+    public const MONTH_NAMES_EN = [
         1  => 'Farvardin',
         2  => 'Ordibehesht',
         3  => 'Khordad',
@@ -59,8 +56,44 @@ final class PersianLocale
         5 => 'Jomeh',
         6 => 'Shanbeh',
     ];
+
     private const PERSIAN_DIGITS = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
 
-    
-}
+    /**
+     * Convert Latin digits in a string to Eastern Arabic (Persian) digits.
+     */
+    public static function toPersianDigits(string $input): string
+    {
+        return str_replace(
+            ['0','1','2','3','4','5','6','7','8','9'],
+            self::PERSIAN_DIGITS,
+            $input
+        );
+    }
 
+    /**
+     * Convert Persian digits to Latin digits.
+     */
+    public static function toLatinDigits(string $input): string
+    {
+        return str_replace(
+            self::PERSIAN_DIGITS,
+            ['0','1','2','3','4','5','6','7','8','9'],
+            $input
+        );
+    }
+
+    public static function monthName(int $month, bool $persian = true): string
+    {
+        return $persian
+            ? self::MONTH_NAMES[$month]
+            : self::MONTH_NAMES_EN[$month];
+    }
+
+    public static function dayName(int $dayOfWeek, bool $persian = true): string
+    {
+        return $persian
+            ? self::DAY_NAMES[$dayOfWeek]
+            : self::DAY_NAMES_EN[$dayOfWeek];
+    }
+}
