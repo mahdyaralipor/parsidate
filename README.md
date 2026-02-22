@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/Mahdyaralipor/parsidate/art/logo.svg" width="120" alt="ParsiDate Logo">
+<img src="https://raw.githubusercontent.com/Mahdyaralipor/parsidate/main/art/logo.svg" width="120" alt="ParsiDate Logo">
 
 # ParsiDate
 
