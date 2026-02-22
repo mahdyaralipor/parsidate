@@ -1,9 +1,12 @@
 <?php
+
 declare(strict_types=1);
+
 namespace ParsiDate;
 
 use ParsiDate\Converter\CalendarConverter;
 use ParsiDate\Exceptions\InvalidDateException;
+use ParsiDate\Holidays\HolidayChecker;
 use ParsiDate\Support\PersianLocale;
 
 /**
@@ -368,6 +371,103 @@ final class ParsiDate implements \Stringable
     public function __toString(): string
     {
         return $this->format('Y/m/d');
+    }
+
+    // -------------------------------------------------------------------------
+    // Holidays & workdays
+    // -------------------------------------------------------------------------
+
+    /**
+     * Check if this date is Friday (Iran's official weekend).
+     */
+    public function isWeekend(): bool
+    {
+        return HolidayChecker::isWeekend($this->dayOfWeek());
+    }
+
+    /**
+     * Check if this date is an official public holiday (not counting weekends).
+     */
+    public function isHoliday(): bool
+    {
+        return HolidayChecker::isHoliday($this->year, $this->month, $this->day);
+    }
+
+    /**
+     * Get the holiday name if this date is a holiday, null otherwise.
+     */
+    public function holidayName(): ?string
+    {
+        return HolidayChecker::holidayName($this->year, $this->month, $this->day);
+    }
+
+    /**
+     * Check if this date is a working day (not a weekend and not a holiday).
+     */
+    public function isWorkday(): bool
+    {
+        return !$this->isWeekend() && !$this->isHoliday();
+    }
+
+    /**
+     * Get the next working day after this date.
+     */
+    public function nextWorkday(): self
+    {
+        $date = $this->addDays(1);
+        while (!$date->isWorkday()) {
+            $date = $date->addDays(1);
+        }
+        return $date;
+    }
+
+    /**
+     * Get the previous working day before this date.
+     */
+    public function previousWorkday(): self
+    {
+        $date = $this->subDays(1);
+        while (!$date->isWorkday()) {
+            $date = $date->subDays(1);
+        }
+        return $date;
+    }
+
+    /**
+     * Add N working days (skips weekends and holidays).
+     */
+    public function addWorkdays(int $days): self
+    {
+        $date    = $this;
+        $counted = 0;
+        $step    = $days >= 0 ? 1 : -1;
+        $target  = abs($days);
+
+        while ($counted < $target) {
+            $date = $date->addDays($step);
+            if ($date->isWorkday()) {
+                $counted++;
+            }
+        }
+        return $date;
+    }
+
+    /**
+     * Count working days between this date and another (exclusive of start, inclusive of end).
+     */
+    public function workdaysUntil(self $other): int
+    {
+        $count  = 0;
+        $cursor = $this->before($other) ? $this : $other;
+        $end    = $this->before($other) ? $other : $this;
+
+        while ($cursor->before($end)) {
+            $cursor = $cursor->addDays(1);
+            if ($cursor->isWorkday()) {
+                $count++;
+            }
+        }
+        return $count;
     }
 
     // -------------------------------------------------------------------------
