@@ -104,9 +104,18 @@ final class ParsiDate implements \Stringable
     // Getters
     // -------------------------------------------------------------------------
 
-    public function year(): int  { return $this->year; }
-    public function month(): int { return $this->month; }
-    public function day(): int   { return $this->day; }
+    public function year(): int
+    {
+        return $this->year;
+    }
+    public function month(): int
+    {
+        return $this->month;
+    }
+    public function day(): int
+    {
+        return $this->day;
+    }
 
     public function isLeapYear(): bool
     {
@@ -175,8 +184,14 @@ final class ParsiDate implements \Stringable
         $m = $this->month + $months;
         $d = $this->day;
 
-        while ($m > 12) { $m -= 12; $y++; }
-        while ($m < 1)  { $m += 12; $y--; }
+        while ($m > 12) {
+            $m -= 12;
+            $y++;
+        }
+        while ($m < 1) {
+            $m += 12;
+            $y--;
+        }
 
         // Clamp day to valid range (e.g. 31st Shahrivar → 30th)
         $d = min($d, CalendarConverter::jalaliMonthDays($y, $m));
@@ -254,8 +269,8 @@ final class ParsiDate implements \Stringable
     /** Difference in days (positive if $other is after $this). */
     public function diffInDays(self $other): int
     {
-        $a = $this->toDateTime()->setTime(0,0);
-        $b = $other->toDateTime()->setTime(0,0);
+        $a = $this->toDateTime()->setTime(0, 0);
+        $b = $other->toDateTime()->setTime(0, 0);
         return (int) $a->diff($b)->days * ($a <= $b ? 1 : -1);
     }
 
@@ -351,6 +366,24 @@ final class ParsiDate implements \Stringable
     public function toGregorian(): array
     {
         return CalendarConverter::jalaliToGregorian($this->year, $this->month, $this->day);
+    }
+
+    /**
+     * Convert this Jalali date to an Islamic (Hijri/Qamarī) date.
+     *
+     * Uses the arithmetic/tabular Hijri calendar — the same system used for
+     * civil purposes in Iran and most of the Islamic world.
+     * Astronomical sighting may shift the actual month-start by ±1 day.
+     *
+     * @example
+     *   $h = ParsiDate::create(1403, 1, 1)->toHijri();
+     *   echo $h->format('j F Y');         // 20 رمضان 1445
+     *   echo $h->formatPersian('Y/m/d');  // ۱۴۴۵/۰۹/۲۰
+     */
+    public function toHijri(): \ParsiDate\HijriDate
+    {
+        $h = CalendarConverter::jalaliToHijri($this->year, $this->month, $this->day);
+        return new \ParsiDate\HijriDate($h['year'], $h['month'], $h['day']);
     }
 
     /**
