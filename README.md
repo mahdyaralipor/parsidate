@@ -7,7 +7,7 @@
 **A modern, zero-dependency PHP library for Jalali (Shamsi) date and time.**
 
 [![PHP](https://img.shields.io/badge/PHP-8.1+-777BB4?style=flat-square&logo=php&logoColor=white)](https://php.net)
-[![Tests](https://img.shields.io/badge/tests-109%20passing-brightgreen?style=flat-square)](#)
+[![Tests](https://img.shields.io/badge/tests-131%20passing-brightgreen?style=flat-square)](#)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 [![Packagist](https://img.shields.io/packagist/v/mahdyaralipor/parsidate?style=flat-square)](https://packagist.org/packages/mahdyaralipor/parsidate)
 
@@ -18,6 +18,7 @@
 ---
 
 <a name="english"></a>
+
 ## 🇬🇧 English
 
 ### Why ParsiDate?
@@ -30,7 +31,7 @@ Most existing Jalali libraries for PHP are either outdated, depend on deprecated
 - ✅ **Full holiday support** — official Iranian public holidays built-in (1400–1405+)
 - ✅ **Period & Range** — iterate, filter, split date ranges
 - ✅ **Persian digit support** — نمایش اعداد فارسی out of the box
-- ✅ **PHP 8.1–8.4** tested and working
+- ✅ **PHP 8.1–8.5** tested and working
 
 ---
 
@@ -215,6 +216,45 @@ $a->diffInMonths($b);         // 5
 
 ---
 
+### Hijri (Islamic) Date Conversion
+
+```php
+$date = ParsiDate::create(1403, 1, 1);  // Nowruz 1403
+
+$hijri = $date->toHijri();
+
+// Accessors
+$hijri->year();    // 1445
+$hijri->month();   // 9
+$hijri->day();     // 10
+
+// Month names
+$hijri->monthName();       // رمضان
+$hijri->monthNameLatin();  // Ramadan
+
+// Formatting
+$hijri->format('j F Y');          // 10 رمضان 1445
+$hijri->format('Y/m/d');          // 1445/09/10
+$hijri->formatPersian('j F Y');   // ۱۰ رمضان ۱۴۴۵
+$hijri->formatPersian('Y/m/d');   // ۱۴۴۵/۰۹/۱۰
+
+// Available format tokens
+// Y=4-digit year, y=2-digit year
+// m=month(padded), n=month(no pad)
+// d=day(padded),   j=day(no pad)
+// F=Arabic month name, M=Latin month name
+
+// Convert to array / JSON
+$hijri->toArray();  // ['year' => 1445, 'month' => 9, 'day' => 10]
+$hijri->toJson();   // {"year":1445,"month":9,"day":10}
+(string) $hijri;    // "1445/09/10"
+```
+
+> **Note:** Uses the arithmetic (tabular) Hijri calendar — the standard civil calendar
+> used across the Islamic world. Astronomical/observational calendars may differ by ±1–2 days.
+
+---
+
 ### Contributing
 
 Contributions, bug reports, and pull requests are welcome!
@@ -229,6 +269,7 @@ composer install
 ---
 
 <a name="فارسی"></a>
+
 ## 🇮🇷 فارسی
 
 ### چرا ParsiDate؟
@@ -241,7 +282,7 @@ composer install
 - ✅ **تعطیلات رسمی** — تعطیلات ایران از 1400 تا 1405+ به صورت built-in
 - ✅ **Period و Range** — پیمایش، فیلتر و تقسیم بازه زمانی
 - ✅ **اعداد فارسی** — پشتیبانی کامل از ارقام فارسی
-- ✅ **PHP 8.1 تا 8.4** — تست‌شده
+- ✅ **PHP 8.1 تا 8.5** — تست‌شده
 
 ---
 
@@ -307,6 +348,40 @@ foreach ($period as $date) {
     echo $date->format('Y/m/d');
 }
 ```
+
+---
+
+### تبدیل به تاریخ هجری قمری
+
+```php
+$date = ParsiDate::create(1403, 1, 1);  // نوروز ۱۴۰۳
+
+$hijri = $date->toHijri();
+
+// دسترسی به اجزا
+$hijri->year();    // 1445
+$hijri->month();   // 9
+$hijri->day();     // 10
+
+// نام ماه
+$hijri->monthName();       // رمضان
+$hijri->monthNameLatin();  // Ramadan
+
+// فرمت‌بندی
+$hijri->format('j F Y');          // 10 رمضان 1445
+$hijri->format('Y/m/d');          // 1445/09/10
+$hijri->formatPersian('j F Y');   // ۱۰ رمضان ۱۴۴۵
+$hijri->formatPersian('Y/m/d');   // ۱۴۴۵/۰۹/۱۰
+
+// خروجی آرایه / JSON
+$hijri->toArray();  // ['year' => 1445, 'month' => 9, 'day' => 10]
+$hijri->toJson();   // {"year":1445,"month":9,"day":10}
+(string) $hijri;    // "1445/09/10"
+```
+
+> **توجه:** این تبدیل از تقویم هجری جدولی (حسابی) استفاده می‌کند — همان تقویمی که در ایران و
+> اکثر کشورهای اسلامی برای مقاصد مدنی به‌کار می‌رود. تقویم هجری نجومی (رؤیت هلال)
+> ممکن است ۱ تا ۲ روز متفاوت باشد.
 
 ---
 
