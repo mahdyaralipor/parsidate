@@ -7,7 +7,7 @@
 **A modern, zero-dependency PHP library for Jalali (Shamsi) date and time.**
 
 [![PHP](https://img.shields.io/badge/PHP-8.1+-777BB4?style=flat-square&logo=php&logoColor=white)](https://php.net)
-[![Tests](https://img.shields.io/badge/tests-131%20passing-brightgreen?style=flat-square)](#)
+[![Tests](https://img.shields.io/badge/tests-136%20passing-brightgreen?style=flat-square)](#)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 [![Packagist](https://img.shields.io/packagist/v/mahdyaralipor/parsidate?style=flat-square)](https://packagist.org/packages/mahdyaralipor/parsidate)
 

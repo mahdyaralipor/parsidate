@@ -15,7 +15,7 @@ Use `art/social-preview.png` from the repo (1280×640, ready-made).
 
 If you build software for 85+ million Persian speakers, you need Jalali (Solar Hijri) dates. And if you do it in PHP, you've probably met the usual suspects: libraries built a decade ago, `strftime()` calls that PHP 8.1 deprecated, mutable date objects that cause spooky action-at-a-distance in queue workers, and holiday lists you have to maintain by hand.
 
-I built **ParsiDate** to fix that for my own projects. It's now at v1.1.0, MIT licensed, with 131 passing tests:
+I built **ParsiDate** to fix that for my own projects. It's now at v1.1.0, MIT licensed, with 136 passing tests:
 
 ```bash
 composer require mahdyaralipor/parsidate
@@ -34,7 +34,7 @@ If you've ever debugged a Carbon object mutated three call frames away, you know
 
 **2. Zero dependencies.** `composer.json` requires exactly one thing: `php: ^8.1`. No Carbon, no framework, no polyfills. It works in Laravel, Symfony, WordPress, or a bare script.
 
-**3. Holidays are data, not your problem.** Official Iranian public holidays (1400–1405+) ship inside the package, with an API for variable holidays:
+**3. Holidays are data, not your problem.** Official Iranian public holidays (1400–1406, verified date-by-date against the official calendar) ship inside the package, with an API for variable holidays:
 
 ```php
 $date->isHoliday();        // true on Nowruz
