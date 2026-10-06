@@ -52,7 +52,7 @@ use ParsiDate\ParsiPeriod;
 
 // Today
 $today = ParsiDate::now();                        // e.g. 1403/06/15
-echo $today->format('l j M Y');                   // شنبه 15 شهریور 1403
+echo $today->format('l j M Y');                   // Panjshanbeh 15 شهریور 1403
 
 // Create & convert
 $nowruz = ParsiDate::create(1403, 1, 1);
@@ -210,7 +210,7 @@ $a->after($b);                // false
 $a->equalTo($b);              // false
 $a->between($start, $end);    // true/false
 
-$a->diffInDays($b);           // 153
+$a->diffInDays($b);           // 155
 $a->diffInMonths($b);         // 5
 ```
 
@@ -301,7 +301,7 @@ use ParsiDate\ParsiDate;
 
 // امروز
 $today = ParsiDate::now();
-echo $today->format('l j M Y');   // شنبه 15 شهریور 1403
+echo $today->format('l j M Y');   // Panjshanbeh 15 شهریور 1403
 
 // ساخت و تبدیل
 $nowruz = ParsiDate::create(1403, 1, 1);
