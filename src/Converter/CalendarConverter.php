@@ -13,6 +13,7 @@ namespace ParsiDate\Converter;
 final class CalendarConverter
 {
     private const G_DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
     private const J_DAYS = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29];
 
     private const JALALI_LEAP_YEARS = [
@@ -738,19 +739,24 @@ final class CalendarConverter
 
         $jDayNo = $gDayNo - 79;
 
-        $jNp     = intdiv($jDayNo, 12053);
+        $jNp = intdiv($jDayNo, 12053);
         $jDayNo %= 12053;
 
-        $jy      = 979 + 33 * $jNp + 4 * intdiv($jDayNo, 1461);
+        $jy = 979 + 33 * $jNp + 4 * intdiv($jDayNo, 1461);
         $jDayNo %= 1461;
 
         if ($jDayNo >= 366) {
-            $jy    += intdiv($jDayNo - 1, 365);
+            $jy += intdiv($jDayNo - 1, 365);
             $jDayNo = ($jDayNo - 1) % 365;
         }
 
+        $jDays = self::J_DAYS;
+        if (self::isJalaliLeapYear($jy)) {
+            $jDays[11] = 30; // Esfand has 30 days in leap years
+        }
+
         $jm = 1;
-        foreach (self::J_DAYS as $daysInMonth) {
+        foreach ($jDays as $daysInMonth) {
             if ($jDayNo < $daysInMonth) {
                 break;
             }
@@ -781,13 +787,13 @@ final class CalendarConverter
 
         $gDayNo = $jDayNo + 79;
 
-        $gy      = 1600 + 400 * intdiv($gDayNo, 146097);
+        $gy = 1600 + 400 * intdiv($gDayNo, 146097);
         $gDayNo %= 146097;
 
         $leap = true;
         if ($gDayNo >= 36525) {
             $gDayNo--;
-            $gy     += 100 * intdiv($gDayNo, 36524);
+            $gy += 100 * intdiv($gDayNo, 36524);
             $gDayNo %= 36524;
 
             if ($gDayNo >= 365) {
@@ -797,13 +803,13 @@ final class CalendarConverter
             }
         }
 
-        $gy     += 4 * intdiv($gDayNo, 1461);
+        $gy += 4 * intdiv($gDayNo, 1461);
         $gDayNo %= 1461;
 
         if ($gDayNo >= 366) {
-            $leap    = false;
+            $leap = false;
             $gDayNo--;
-            $gy     += intdiv($gDayNo, 365);
+            $gy += intdiv($gDayNo, 365);
             $gDayNo %= 365;
         }
 
@@ -827,6 +833,7 @@ final class CalendarConverter
     public static function isJalaliLeapYear(int $jy): bool
     {
         $normalized = (($jy - 1) % 2820) + 1;
+
         return in_array($normalized, self::JALALI_LEAP_YEARS, strict: true);
     }
 
@@ -846,8 +853,13 @@ final class CalendarConverter
         if ($jm < 1 || $jm > 12) {
             throw new \InvalidArgumentException("Invalid Jalali month: $jm");
         }
-        if ($jm <= 6) return 31;
-        if ($jm <= 11) return 30;
+        if ($jm <= 6) {
+            return 31;
+        }
+        if ($jm <= 11) {
+            return 30;
+        }
+
         return self::isJalaliLeapYear($jy) ? 30 : 29;
     }
 
@@ -859,7 +871,10 @@ final class CalendarConverter
         if ($gm < 1 || $gm > 12) {
             throw new \InvalidArgumentException("Invalid Gregorian month: $gm");
         }
-        if ($gm === 2) return self::isGregorianLeapYear($gy) ? 29 : 28;
+        if ($gm === 2) {
+            return self::isGregorianLeapYear($gy) ? 29 : 28;
+        }
+
         return self::G_DAYS[$gm - 1];
     }
 
@@ -881,6 +896,7 @@ final class CalendarConverter
     {
         // Julian Day Number (integer)
         $jdn = self::gregorianToJdn($gy, $gm, $gd);
+
         return self::jdnToHijri($jdn);
     }
 
@@ -893,6 +909,7 @@ final class CalendarConverter
     public static function jalaliToHijri(int $jy, int $jm, int $jd): array
     {
         $greg = self::jalaliToGregorian($jy, $jm, $jd);
+
         return self::gregorianToHijri($greg['year'], $greg['month'], $greg['day']);
     }
 
@@ -904,6 +921,7 @@ final class CalendarConverter
     public static function hijriToGregorian(int $hy, int $hm, int $hd): array
     {
         $jdn = self::hijriToJdn($hy, $hm, $hd);
+
         return self::jdnToGregorian($jdn);
     }
 
@@ -942,9 +960,9 @@ final class CalendarConverter
         $e = $c - intdiv(1461 * $d, 4);
         $m = intdiv(5 * $e + 2, 153);
 
-        $day   = $e - intdiv(153 * $m + 2, 5) + 1;
+        $day = $e - intdiv(153 * $m + 2, 5) + 1;
         $month = $m + 3 - 12 * intdiv($m, 10);
-        $year  = 100 * $b + $d - 4800 + intdiv($m, 10);
+        $year = 100 * $b + $d - 4800 + intdiv($m, 10);
 
         return ['year' => $year, 'month' => $month, 'day' => $day];
     }
@@ -968,9 +986,9 @@ final class CalendarConverter
         /** Leap years within each 30-year cycle (1-indexed). */
         static $leapYearsInCycle = [2, 5, 7, 10, 13, 16, 18, 21, 24, 26, 29];
 
-        $d     = $jdn - self::HIJRI_EPOCH;
+        $d = $jdn - self::HIJRI_EPOCH;
         $cycle = intdiv($d, 10631);
-        $rem   = $d % 10631;
+        $rem = $d % 10631;
 
         $yearInCycle = 30; // fallback for full cycle
         for ($y = 1; $y <= 30; $y++) {
@@ -982,8 +1000,8 @@ final class CalendarConverter
             $rem -= $yearDays;
         }
 
-        $year    = $cycle * 30 + $yearInCycle;
-        $isLeap  = in_array($yearInCycle, $leapYearsInCycle, true);
+        $year = $cycle * 30 + $yearInCycle;
+        $isLeap = in_array($yearInCycle, $leapYearsInCycle, true);
 
         $month = 12; // fallback
         for ($m = 1; $m <= 12; $m++) {
@@ -1009,7 +1027,7 @@ final class CalendarConverter
         static $leapYearsInCycle = [2, 5, 7, 10, 13, 16, 18, 21, 24, 26, 29];
 
         // Complete 30-year cycles before this year
-        $cycles    = intdiv($hy - 1, 30);
+        $cycles = intdiv($hy - 1, 30);
         $yearInCycle = (($hy - 1) % 30) + 1;
 
         // Days in complete cycles

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace ParsiDate\Tests;
 
-use ParsiDate\ParsiDate;
 use ParsiDate\Exceptions\InvalidDateException;
+use ParsiDate\ParsiDate;
 use PHPUnit\Framework\TestCase;
 
 class ParsiDateTest extends TestCase
@@ -52,6 +52,15 @@ class ParsiDateTest extends TestCase
         $this->assertSame(1403, $d->year());
         $this->assertSame(1, $d->month());
         $this->assertSame(1, $d->day());
+    }
+
+    public function test_from_gregorian_leap_esfand_30th(): void
+    {
+        // Regression: leap-year Esfand 30th used to decode as month 13
+        $d = ParsiDate::fromGregorian(2025, 3, 20);
+        $this->assertSame('1403/12/30', $d->format('Y/m/d'));
+        $d = ParsiDate::fromGregorian(2030, 3, 20);
+        $this->assertSame('1408/12/30', $d->format('Y/m/d'));
     }
 
     public function test_parse_slash_format(): void
@@ -107,15 +116,15 @@ class ParsiDateTest extends TestCase
 
     public function test_day_of_year(): void
     {
-        $this->assertSame(1,   ParsiDate::create(1403, 1, 1)->dayOfYear());
-        $this->assertSame(32,  ParsiDate::create(1403, 2, 1)->dayOfYear());
+        $this->assertSame(1, ParsiDate::create(1403, 1, 1)->dayOfYear());
+        $this->assertSame(32, ParsiDate::create(1403, 2, 1)->dayOfYear());
         $this->assertSame(366, ParsiDate::create(1403, 12, 30)->dayOfYear()); // leap year
     }
 
     public function test_month_name_persian(): void
     {
         $this->assertSame('فروردین', ParsiDate::create(1403, 1, 1)->monthName());
-        $this->assertSame('اسفند',  ParsiDate::create(1403, 12, 1)->monthName());
+        $this->assertSame('اسفند', ParsiDate::create(1403, 12, 1)->monthName());
     }
 
     public function test_month_name_english(): void
@@ -227,8 +236,8 @@ class ParsiDateTest extends TestCase
     public function test_between(): void
     {
         $start = ParsiDate::create(1403, 1, 1);
-        $end   = ParsiDate::create(1403, 12, 29);
-        $mid   = ParsiDate::create(1403, 6, 15);
+        $end = ParsiDate::create(1403, 12, 29);
+        $mid = ParsiDate::create(1403, 6, 15);
         $this->assertTrue($mid->between($start, $end));
         $this->assertTrue($start->between($start, $end)); // inclusive
     }

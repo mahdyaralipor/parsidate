@@ -28,7 +28,7 @@ Most existing Jalali libraries for PHP are either outdated, depend on deprecated
 - ✅ **Zero external dependencies** — pure PHP 8.1+
 - ✅ **Immutable by default** — no side-effects, no surprises
 - ✅ **Fluent, chainable API** — similar feel to Carbon
-- ✅ **Full holiday support** — official Iranian public holidays built-in (1400–1405+)
+- ✅ **Full holiday support** — official Iranian public holidays built-in (1400–1406; 1406 per the officially published advance calendar)
 - ✅ **Period & Range** — iterate, filter, split date ranges
 - ✅ **Persian digit support** — نمایش اعداد فارسی out of the box
 - ✅ **PHP 8.1–8.5** tested and working
@@ -279,7 +279,7 @@ composer install
 - ✅ **بدون وابستگی خارجی** — PHP خالص 8.1+
 - ✅ **Immutable** — بدون side-effect
 - ✅ **API روان و chainable** — شبیه Carbon
-- ✅ **تعطیلات رسمی** — تعطیلات ایران از 1400 تا 1405+ به صورت built-in
+- ✅ **تعطیلات رسمی** — تعطیلات ایران از 1400 تا 1406 به صورت built-in (۱۴۰۶ طبق تقویم رسمی پیش‌بینی‌شده)
 - ✅ **Period و Range** — پیمایش، فیلتر و تقسیم بازه زمانی
 - ✅ **اعداد فارسی** — پشتیبانی کامل از ارقام فارسی
 - ✅ **PHP 8.1 تا 8.5** — تست‌شده
