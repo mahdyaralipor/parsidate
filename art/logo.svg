@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="calBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#D7E0F2"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#3B82F6"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6D7CFF"/>
+      <stop offset="1" stop-color="#4F46E5"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FCD34D"/>
+      <stop offset="1" stop-color="#F59E0B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- swoosh ribbon (behind body, hugging it) -->
+  <path d="M 58 208 C 60 300, 140 348, 240 340 C 320 333, 356 280, 352 198"
+        fill="none" stroke="url(#accent)" stroke-width="26" stroke-linecap="round"/>
+
+  <!-- binder bar -->
+  <rect x="70" y="80" width="260" height="52" rx="26" fill="#1E2A4A"/>
+  <!-- rings -->
+  <rect x="126" y="58" width="26" height="58" rx="13" fill="url(#ring)"/>
+  <rect x="248" y="58" width="26" height="58" rx="13" fill="url(#ring)"/>
+
+  <!-- calendar body -->
+  <rect x="70" y="106" width="260" height="214" rx="34" fill="url(#calBody)" stroke="#B9C6E2" stroke-width="2"/>
+
+  <!-- dark screen -->
+  <rect x="100" y="152" width="200" height="138" rx="20" fill="#0F172A"/>
+
+  <!-- day cells 3x3 -->
+  <g>
+    <rect x="122" y="170" width="26" height="26" rx="7" fill="#5B6B8C"/>
+    <rect x="158" y="170" width="26" height="26" rx="7" fill="#5B6B8C"/>
+    <rect x="194" y="170" width="26" height="26" rx="7" fill="#E8EDF7"/>
+    <rect x="122" y="206" width="26" height="26" rx="7" fill="#5B6B8C"/>
+    <rect x="158" y="206" width="26" height="26" rx="7" fill="url(#gold)"/>
+    <rect x="194" y="206" width="26" height="26" rx="7" fill="#5B6B8C"/>
+    <rect x="122" y="242" width="26" height="26" rx="7" fill="#5B6B8C"/>
+    <rect x="158" y="242" width="26" height="26" rx="7" fill="#5B6B8C"/>
+    <rect x="194" y="242" width="26" height="26" rx="7" fill="#5B6B8C"/>
+  </g>
+</svg>

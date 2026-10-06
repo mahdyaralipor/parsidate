@@ -7,7 +7,7 @@ Jalali Dates in Modern PHP: Building ParsiDate — Immutable, Zero-Dependency, w
 #php #opensource #datetime #laravel
 
 ## Cover image suggestion
-The repo logo (`art/logo.svg`) on a dark background, or a terminal screenshot of the Quick Start snippet output.
+Use `art/social-preview.png` from the repo (1280×640, ready-made).
 
 ---
 
