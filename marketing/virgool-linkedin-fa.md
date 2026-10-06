@@ -16,7 +16,7 @@ composer require mahdyaralipor/parsidate
 use ParsiDate\ParsiDate;
 
 $today = ParsiDate::now();
-echo $today->format('l j M Y');      // شنبه 15 شهریور 1403
+echo $today->format('l j M Y');      // Panjshanbeh 15 شهریور 1403
 
 ParsiDate::parse('۱۴۰۳/۰۶/۱۵');      // اعداد فارسی هم می‌فهمه
 
@@ -29,10 +29,10 @@ $today->addWorkdays(5);              // ۵ روز کاری بعد (جمعه و �
 
 - ✅ **بدون dependency** — فقط PHP 8.1+ خالص
 - ✅ **Immutable** — هر متد یه نمونه جدید برمی‌گردونه، خبری از side-effect نیست
-- ✅ **تعطیلات رسمی ایران built-in** (۱۴۰۰ تا ۱۴۰۵+) + روزهای کاری
+- ✅ **تعطیلات رسمی ایران built-in** (۱۴۰۰ تا ۱۴۰۶، تک‌تک تاریخ‌ها با تقویم رسمی چک شده) + روزهای کاری
 - ✅ **Period** — بازه تاریخی با `foreach`، فیلتر جمعه‌ها/تعطیلات، تقسیم هفتگی و ماهانه
 - ✅ **تبدیل هجری قمری** + اعداد فارسی
-- ✅ **۱۳۱ تست سبز**
+- ✅ **۱۳۶ تست سبز**
 
 ```php
 $period = ParsiPeriod::ofMonth(1403, 1);
